@@ -29,6 +29,17 @@ export function Navbar() {
         </Link>
 
         <div className="flex items-center gap-3">
+          <Link href="/dashboard">
+            <Button
+              variant="outline"
+              size="sm"
+              className="gap-1.5 text-xs rounded-xl border-border/80 hover:bg-muted cursor-pointer"
+            >
+              <Rocket className="h-3.5 w-3.5 text-primary" />
+              <span>3D Globe &amp; Explorer</span>
+            </Button>
+          </Link>
+
           {loading ? (
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Loader2 className="h-4 w-4 animate-spin" />

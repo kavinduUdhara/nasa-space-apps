@@ -1,18 +1,11 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { Navbar } from "@/components/pages/landing/navbar";
 import { GoogleSignInButton } from "@/components/pages/landing/google-sign-in-button";
 import { useAuth } from "@/context/auth-context";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -34,7 +27,7 @@ export default function Home() {
   const { user, loading, dbSaving, dbSynced, error, clearError, logout } = useAuth();
 
   return (
-    <div className="flex min-h-screen flex-col bg-linear-to-b from-background via-background to-muted/20">
+    <div className="flex min-h-screen flex-col bg-background">
       <Navbar />
 
       <main className="flex-1">
@@ -89,9 +82,10 @@ export default function Home() {
                   Initializing Firebase Authentication...
                 </div>
               ) : user ? (
-                /* Authenticated User Card */
-                <Card className="w-full max-w-md border-border/80 shadow-md text-left bg-card/70 backdrop-blur-xs">
-                  <CardHeader className="pb-3">
+                /* Authenticated User Box (Solid Div) */
+                <div className="w-full max-w-md rounded-xl border border-border bg-card text-card-foreground shadow-md text-left overflow-hidden">
+                  {/* Header */}
+                  <div className="px-6 pt-6 pb-3">
                     <div className="flex items-center justify-between">
                       <Badge variant="default" className="gap-1 text-xs">
                         <CheckCircle2 className="h-3.5 w-3.5" />
@@ -101,9 +95,10 @@ export default function Home() {
                         Firebase Auth
                       </span>
                     </div>
-                  </CardHeader>
+                  </div>
 
-                  <CardContent className="space-y-4 pt-1">
+                  {/* Content */}
+                  <div className="px-6 pb-6 space-y-4 pt-1">
                     <div className="flex items-center gap-3.5">
                       <Avatar size="lg" className="ring-2 ring-primary/20">
                         {user.photoURL && (
@@ -130,7 +125,7 @@ export default function Home() {
                     </div>
 
                     {/* Firestore Database Sync Status */}
-                    <div className="rounded-lg border border-border/60 bg-muted/40 p-3 space-y-2">
+                    <div className="rounded-lg border border-border bg-muted p-3 space-y-2">
                       <div className="flex items-center justify-between text-xs">
                         <span className="flex items-center gap-1.5 font-medium text-foreground">
                           <Database className="h-3.5 w-3.5 text-primary" />
@@ -142,7 +137,10 @@ export default function Home() {
                             Saving user...
                           </span>
                         ) : dbSynced ? (
-                          <Badge variant="secondary" className="text-[10px] gap-1 px-1.5 py-0 text-emerald-600 dark:text-emerald-400">
+                          <Badge
+                            variant="secondary"
+                            className="text-[10px] gap-1 px-1.5 py-0 text-emerald-600 dark:text-emerald-400"
+                          >
                             <CheckCircle2 className="h-3 w-3" />
                             Data Synced
                           </Badge>
@@ -173,9 +171,10 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-                  </CardContent>
+                  </div>
 
-                  <CardFooter className="pt-2 flex justify-between border-t border-border/50">
+                  {/* Footer */}
+                  <div className="px-6 py-4 flex justify-between border-t border-border bg-muted/30">
                     <Button
                       variant="ghost"
                       size="sm"
@@ -186,12 +185,14 @@ export default function Home() {
                       Sign Out
                     </Button>
 
-                    <Button size="sm" className="gap-1.5 text-xs">
-                      <Rocket className="h-3.5 w-3.5" />
-                      Dashboard
-                    </Button>
-                  </CardFooter>
-                </Card>
+                    <Link href="/dashboard">
+                      <Button size="sm" className="gap-1.5 text-xs cursor-pointer">
+                        <Rocket className="h-3.5 w-3.5" />
+                        Dashboard
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
               ) : (
                 /* Unauthenticated View: Sign In with Google */
                 <div className="flex flex-col items-center gap-4">
@@ -225,57 +226,57 @@ export default function Home() {
         </section>
 
         {/* Feature Highlights Grid */}
-        <section className="py-12 border-t border-border/40 bg-muted/10">
+        <section className="py-12 border-t border-border bg-muted/20">
           <div className="container mx-auto max-w-5xl px-4">
             <h2 className="text-center font-heading text-xl font-bold tracking-tight text-foreground sm:text-2xl mb-8">
               Platform Features
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="bg-card/50">
-                <CardHeader>
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary mb-2">
-                    <ShieldCheck className="h-5 w-5" />
-                  </div>
-                  <CardTitle>Firebase Authentication</CardTitle>
-                  <CardDescription>
-                    Google OAuth 2.0 integration configured with client SDK for
-                    instant, secure sign-in.
-                  </CardDescription>
-                </CardHeader>
-              </Card>
+              <div className="rounded-xl border border-border bg-card text-card-foreground p-6 shadow-xs">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary mb-4">
+                  <ShieldCheck className="h-5 w-5" />
+                </div>
+                <h3 className="font-semibold leading-none tracking-tight mb-2">
+                  Firebase Authentication
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Google OAuth 2.0 integration configured with client SDK for
+                  instant, secure sign-in.
+                </p>
+              </div>
 
-              <Card className="bg-card/50">
-                <CardHeader>
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-chart-1/10 text-chart-1 mb-2">
-                    <Server className="h-5 w-5" />
-                  </div>
-                  <CardTitle>Cloud Firestore Database</CardTitle>
-                  <CardDescription>
-                    User profiles and session telemetry automatically stored and synchronized in real time.
-                  </CardDescription>
-                </CardHeader>
-              </Card>
+              <div className="rounded-xl border border-border bg-card text-card-foreground p-6 shadow-xs">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-chart-1/10 text-chart-1 mb-4">
+                  <Server className="h-5 w-5" />
+                </div>
+                <h3 className="font-semibold leading-none tracking-tight mb-2">
+                  Cloud Firestore Database
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  User profiles and session telemetry automatically stored and synchronized in real time.
+                </p>
+              </div>
 
-              <Card className="bg-card/50">
-                <CardHeader>
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-chart-2/10 text-chart-2 mb-2">
-                    <Globe className="h-5 w-5" />
-                  </div>
-                  <CardTitle>NASA Space Data</CardTitle>
-                  <CardDescription>
-                    Connect your authenticated profile to earth observation,
-                    satellite feeds, and challenge entries.
-                  </CardDescription>
-                </CardHeader>
-              </Card>
+              <div className="rounded-xl border border-border bg-card text-card-foreground p-6 shadow-xs">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-chart-2/10 text-chart-2 mb-4">
+                  <Globe className="h-5 w-5" />
+                </div>
+                <h3 className="font-semibold leading-none tracking-tight mb-2">
+                  NASA Space Data
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Connect your authenticated profile to earth observation,
+                  satellite feeds, and challenge entries.
+                </p>
+              </div>
             </div>
           </div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border/40 py-6 text-center text-xs text-muted-foreground">
+      <footer className="border-t border-border py-6 text-center text-xs text-muted-foreground">
         <div className="container mx-auto max-w-5xl px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <span>NASA Space Apps Challenge &bull; Firebase project: nasa-spaces</span>
           <span className="font-mono">Next.js 16 &bull; React 19 &bull; Firestore Database</span>
